@@ -7,6 +7,7 @@ class Square extends React.Component {
     return (
       <button 
         className="square"
+        onClick={() => console.log(this.props.value)}
       >
         {this.props.value}
       </button>
