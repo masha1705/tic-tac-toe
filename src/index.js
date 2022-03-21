@@ -3,34 +3,39 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: ''
-    };
-  }
-
-  handleRightClick(event) {
-    event.preventDefault();
-    this.setState({ value: 'O' });
-  }
-
   render() {
     return (
       <button 
         className="square"
-        onClick={() => this.setState({value: 'X'})}
-        onContextMenu={event => this.handleRightClick(event)}
+        onClick={ () => this.props.onClick() }
       >
-        {this.state.value}
+      { this.props.value}
       </button>
     );
   }
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
-    return <Square value={i} />;
+    constructor(props) {
+      super(props);
+      this.state = {
+        squares: new Array(9).fill(null)
+      };
+    }
+
+    renderSquare(i) {
+    return (
+     <Square 
+       value={ this.state.squares[i] } 
+       onClick = { () => this.handleClick(i) }
+    />
+     );
+    }
+
+  handleClick(i) {
+    const newSquares = this.state.squares.slice();
+    newSquares[i] = 'X';
+    this.setState({ squares: newSquares })
   }
 
   render() {
