@@ -3,13 +3,26 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: ''
+    };
+  }
+
+  handleRightClick(event) {
+    event.preventDefault();
+    this.setState({ value: 'O' });
+  }
+
   render() {
     return (
       <button 
         className="square"
-        onClick={() => console.log(this.props.value)}
+        onClick={() => this.setState({value: 'X'})}
+        onContextMenu={event => this.handleRightClick(event)}
       >
-        {this.props.value}
+        {this.state.value}
       </button>
     );
   }
@@ -63,6 +76,8 @@ class Game extends React.Component {
 }
 
 ReactDOM.render(
-  <Game />,
+    <React.StrictMode>
+      <Game />
+    </React.StrictMode>,
   document.getElementById('root')
 );
