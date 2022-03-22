@@ -13,6 +13,18 @@ function Square (props) {
     );
   }
 
+function RestartButton (props) {
+    return (
+        <button 
+          id="restart-button"
+            style={{ display: props.display }} 
+            onClick={ props.onClick}
+        >
+          Restart
+        </button>
+    );
+}
+
 class Board extends React.Component {
     constructor(props) {
       super(props);
@@ -44,13 +56,22 @@ class Board extends React.Component {
     });
   }
 
+  restartGame() {
+    this.setState({
+      squares: new Array(9).fill(null),
+      nextStep: true
+    });
+  }
+
   render() {
     const winner = calculateWinner(this.state.squares);
+    const endGame = !this.state.squares.includes(null);
     let status = '';
 
     if (winner) {
       status = `The winner is ${calculateWinner(this.state.squares)}`
-
+    } else if (endGame) {
+      status = 'Game over';
     } else {
       status = `Next player: ${this.state.nextStep ? 'X' : 'O'}`;
     }
@@ -73,6 +94,9 @@ class Board extends React.Component {
           {this.renderSquare(7)}
           {this.renderSquare(8)}
         </div>
+        <RestartButton display={ winner || endGame ? 'block' : 'none'} 
+          onClick={ () => this.restartGame()}
+        />
       </div>
     );
   }
@@ -115,6 +139,10 @@ function calculateWinner(squares) {
   }
   return null;
 }
+
+// function ckeckEndGame(squares) {
+//   return !squares.includes(null);
+// }
 
 ReactDOM.render(
     <React.StrictMode>

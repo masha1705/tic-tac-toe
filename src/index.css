@@ -37,6 +37,21 @@ ol, ul {
   outline: none;
 }
 
+#restart-button {
+  margin: 10px auto 0;
+  cursor: pointer;
+  border-radius: 0;
+  background: #fff;
+  border: 1px solid #999;
+  transition: .3s;
+}
+
+#restart-button:hover {
+  transform: scale(.95);
+}
+
+
+
 .kbd-navigation .square:focus {
   background: #ddd;
 }
